@@ -30,8 +30,8 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       weight: {
-        type: DataTypes.DECIMAL,
-        defaultValue: false,
+        type: DataTypes.INTEGER,
+        allowNull: true,
       },
       energyLevel: {
         type: DataTypes.STRING,
@@ -51,7 +51,7 @@ module.exports = (sequelize) => {
       },
       status: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true
+        defaultValue: true,
      }
 
     },

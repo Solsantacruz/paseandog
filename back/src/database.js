@@ -7,9 +7,10 @@ const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_BASE } = process.env;
 //para deploy
 // const { DB_DEPLOY } = process.env;
-// const UserModels = require("./models/User");
-// const TodoModels = require("./models/Todo");
-// const SharetodoModels = require("./models/Sharetodo");
+const DogsModels = require("./models/Dogs");
+const DogObservationsModels = require("./models/DogObservations");
+const DogOwnersModels = require("./models/DogOwners");
+const UserModels = require("./models/User");
 
 
 
@@ -34,26 +35,29 @@ const sequelize = new Sequelize(
 //   );
 
 
-// UserModels(sequelize);
-// TodoModels(sequelize);
-// SharetodoModels(sequelize);
+DogsModels(sequelize);
+DogObservationsModels(sequelize);
+DogOwnersModels(sequelize);
+UserModels(sequelize);
 
-// const { User, Todo} = sequelize.models;
+const { Dogs, DogObservations, DogOwners, User} = sequelize.models;
 
 
 // Se define las relaciones
-// User.belongsToMany(Todo, { through: 'sharetodo'  });
-// Todo.belongsToMany(User, { through: 'sharetodo' });
-
-// Opcionalmente, puedes definir las relaciones inversas
-// Sharetodo.belongsTo(User, { foreignKey: "id" });
-// Sharetodo.belongsTo(Todo, { foreignKey: "id" });
-
+User.hasMany(DogOwners);
+DogOwners.hasMany(Dogs);
+// Dogs.hasOne(DogOwners);
+Dogs.hasMany(DogObservations);
+DogObservations.hasOne(Dogs);
 
 
 
 
   //exportamos los modelos 
 module.exports = {
+    Dogs, 
+    DogObservations, 
+    DogOwners, 
+    User,
     conn: sequelize,
   };
