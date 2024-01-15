@@ -1,11 +1,11 @@
 const {Router} = require('express');
 const handlerUser = require('../handler/user');
-const handler = require('../handler/toDo');
+const handlerDogOwners = require("../handler/dogOwners");
 
 
 const router = Router();
 
 router.use('/user', handlerUser);
-// router.use('/todo', handlerToDo);
+router.use('/dogOwners', handlerDogOwners);
 
 module.exports = router;

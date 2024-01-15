@@ -1,5 +1,5 @@
 const express = require("express");
-// const routes = require("./routes/index");
+const routes = require("./routes/index");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
@@ -29,6 +29,6 @@ server.use((req, res, next) => {
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
-// server.use("/", routes);
+server.use("/", routes);
 
 module.exports = server;
