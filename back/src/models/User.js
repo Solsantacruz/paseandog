@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-
+//Paseador ayudante
 module.exports = (sequelize) => {
   sequelize.define(
     "User",
@@ -11,18 +11,22 @@ module.exports = (sequelize) => {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
-      email: {
+      phone: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      password: {
+      email: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      address: {
         type: DataTypes.STRING,
         allowNull: false,
       },
     },
 
-    { timestamps: false }
+    { timestamps: true }
   );
 };

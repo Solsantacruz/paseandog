@@ -2,7 +2,7 @@ const { Router } = require("express");
 const {
   createUser,
   getAllUser,
-} = require("../controller/user");
+} = require("../controller/admin");
 
 const router = Router();
 

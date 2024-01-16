@@ -1,20 +1,28 @@
 const { DataTypes } = require("sequelize");
-//Procesos de cada perro
+
 module.exports = (sequelize) => {
   sequelize.define(
-    "DogObservations",
+    "Admin",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      description: {
-        type: DataTypes.TEXT,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },
 
-    { timestamps: true }
+    { timestamps: false }
   );
 };

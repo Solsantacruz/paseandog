@@ -10,7 +10,7 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_BASE } = process.env;
 const DogsModels = require("./models/Dogs");
 const DogObservationsModels = require("./models/DogObservations");
 const DogOwnersModels = require("./models/DogOwners");
-const UserModels = require("./models/User");
+const AdminModels = require("./models/Admin");
 
 
 
@@ -38,13 +38,13 @@ const sequelize = new Sequelize(
 DogsModels(sequelize);
 DogObservationsModels(sequelize);
 DogOwnersModels(sequelize);
-UserModels(sequelize);
+AdminModels(sequelize);
 
-const { Dogs, DogObservations, DogOwners, User} = sequelize.models;
+const { Dogs, DogObservations, DogOwners, Admin} = sequelize.models;
 
 
 // Se define las relaciones
-User.hasMany(DogOwners);
+Admin.hasMany(DogOwners);
 DogOwners.hasMany(Dogs);
 // Dogs.hasOne(DogOwners);
 Dogs.hasMany(DogObservations);
@@ -58,6 +58,6 @@ module.exports = {
     Dogs, 
     DogObservations, 
     DogOwners, 
-    User,
+    Admin,
     conn: sequelize,
   };

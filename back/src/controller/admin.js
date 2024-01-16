@@ -1,10 +1,10 @@
-const { User, Todo} = require('../database')
+const { Admin, Todo} = require('../database')
 
 
 // Controller Nuevo Usuario 
 const createUser = async (email, password) => {
   
-      const newUser = await User.create({
+      const newUser = await Admin.create({
         email,
         password,
       });
@@ -13,7 +13,7 @@ const createUser = async (email, password) => {
 
     // Controller llamado a todos los Administradores
 const getAllUser = async () => {
-    const admin = await User.findAll();
+    const admin = await Admin.findAll();
     return admin;
   };
 

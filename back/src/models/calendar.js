@@ -1,24 +1,24 @@
 const { DataTypes } = require("sequelize");
-
+//calendario 
 module.exports = (sequelize) => {
   sequelize.define(
-    "User",
+    "Calendar",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      name: {
-        type: DataTypes.STRING,
+      fecha: {
+        type: DataTypes.DATE,
         allowNull: false,
       },
-      email: {
-        type: DataTypes.STRING,
+      hora: {
+        type: DataTypes.DATE,
         allowNull: false,
       },
-      password: {
-        type: DataTypes.STRING,
+      detalle: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
     },

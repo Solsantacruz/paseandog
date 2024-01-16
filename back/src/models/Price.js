@@ -1,20 +1,24 @@
 const { DataTypes } = require("sequelize");
-//Procesos de cada perro
+//Costo y nombres de las tarifas
 module.exports = (sequelize) => {
   sequelize.define(
-    "DogObservations",
+    "Price",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      description: {
-        type: DataTypes.TEXT,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
     },
 
-    { timestamps: true }
+    { timestamps: false }
   );
 };
