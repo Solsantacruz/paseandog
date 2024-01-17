@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
-//Paseador ayudante
+//Costo y nombres de las tarifas bonos
 module.exports = (sequelize) => {
   sequelize.define(
-    "User",
+    "PriceBono",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -13,22 +13,18 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      phone: {
-        type: DataTypes.STRING,
+      cantidadServicios: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: true,
+      serviciosUtilizados: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
-      address: {
-        type: DataTypes.STRING,
+      precio: {
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
-      status: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
-     },
     },
 
     { timestamps: true }

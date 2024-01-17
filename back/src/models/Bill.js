@@ -1,24 +1,24 @@
 const { DataTypes } = require("sequelize");
-//Costo y nombres de las tarifas
+// Detalles de los paseos
 module.exports = (sequelize) => {
   sequelize.define(
-    "Price",
+    "Billlñ",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      name: {
-        type: DataTypes.STRING,
+      observation: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
-      price: {
-        type: DataTypes.DECIMAL(10, 2),
+      date: {
+        type: DataTypes.DATEONLY,
         allowNull: false,
-      },
+      }
     },
 
-    { timestamps: false }
+    { timestamps: true }
   );
 };
