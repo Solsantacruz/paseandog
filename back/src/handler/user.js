@@ -2,6 +2,7 @@ const { Router } = require("express");
 const {
   createUser,
   getAllUser,
+  loginUser
 } = require("../controller/admin");
 
 const router = Router();
@@ -28,6 +29,22 @@ router.get("/", async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   });
+
+ router.get("/login", async (req, res) => {
+    const { email, password } = req.query;
+  
+    try {
+      const result = await loginUser(email, password);
+  
+      if (result.access) {
+        res.status(200).json(result);
+      } else {
+        res.status(403).send(result.message);
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  })
 
 
 
