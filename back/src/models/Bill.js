@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 // Detalles de los paseos
 module.exports = (sequelize) => {
   sequelize.define(
-    "Billlñ",
+    "Bill",
     {
       id: {
         type: DataTypes.INTEGER,

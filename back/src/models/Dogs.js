@@ -45,7 +45,7 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
-      behavior: {
+      behavior: { //conducta inicial 
         type: DataTypes.TEXT,
         allowNull: true,
       },

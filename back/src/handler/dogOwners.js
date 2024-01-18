@@ -8,10 +8,10 @@ const router = Router();
 
 // Crear un nuevo usuario
 router.post('/', async(req, res) => {
-    const {name, phone, email, address, postalCode, district, emergencyContact, avatar,UserId} = req.body;
+    const {name, phone, email, address, postalCode, district, emergencyContact, avatar, AdminId } = req.body;
     console.log(req.body);
     try {
-        const response = await createOwner(name, phone, email, address, postalCode, district, emergencyContact, avatar, UserId );
+        const response = await createOwner(name, phone, email, address, postalCode, district, emergencyContact, avatar, AdminId );
         res.status(200).json(response)
     } catch (error) {
         res.status(500).json({ message: error.message });

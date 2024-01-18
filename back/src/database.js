@@ -11,8 +11,12 @@ const DogsModels = require("./models/Dogs");
 const DogObservationsModels = require("./models/DogObservations");
 const DogOwnersModels = require("./models/DogOwners");
 const AdminModels = require("./models/Admin");
-
-
+const UserModels = require("./models/User");
+const CalendarModels = require("./models/calendar");
+const PriceUniqueModels = require("./models/PriceUnique");
+const PriceBonoModels = require("./models/PriceBono");
+const WalksModels = require("./models/Walks");
+const BillModels = require("./models/Bill");
 
 // Para conexion local
 const sequelize = new Sequelize(
@@ -33,22 +37,87 @@ const sequelize = new Sequelize(
 //       },
 //     }
 //   );
-
-
 DogsModels(sequelize);
 DogObservationsModels(sequelize);
 DogOwnersModels(sequelize);
 AdminModels(sequelize);
+UserModels(sequelize);
+CalendarModels(sequelize);
+PriceUniqueModels(sequelize);
+PriceBonoModels(sequelize);
+WalksModels(sequelize);
+BillModels(sequelize);
 
-const { Dogs, DogObservations, DogOwners, Admin} = sequelize.models;
+const { Dogs, DogObservations, DogOwners, Admin, User, Calendar, PriceUnique, PriceBono, Walks, Bill} = sequelize.models;
 
 
 // Se define las relaciones
-Admin.hasMany(DogOwners);
-DogOwners.hasMany(Dogs);
+
+// Admin.hasMany(DogOwners);
+// DogOwners.hasMany(Dogs);
 // Dogs.hasOne(DogOwners);
+// Dogs.hasMany(DogObservations);
+// DogObservations.hasOne(Dogs);
+
+
+// Relaciones entre modelos
+
+// Un administrador puede tener varios dueños de perros
+Admin.hasMany(DogOwners);
+DogOwners.belongsTo(Admin);
+
+// Un dueño de perro puede tener varios perros
+DogOwners.hasMany(Dogs);
+Dogs.belongsTo(DogOwners);
+
+// Un perro puede tener varias observaciones de conducta
 Dogs.hasMany(DogObservations);
-DogObservations.hasOne(Dogs);
+DogObservations.belongsTo(Dogs);
+
+// Un paseador (User) puede tener varios paseos (Walks)
+User.hasMany(Walks);
+Walks.belongsTo(User);
+
+// Un paseador (Admin) puede tener varios paseos (Walks)
+Admin.hasMany(Walks);
+Walks.belongsTo(Admin);
+
+// Un cliente (DogOwners) puede tener varias reservas (Calendar)
+DogOwners.hasMany(Calendar);
+Calendar.belongsTo(DogOwners);
+
+// Una reserva (Calendar) puede estar asociada a un perro (Dogs)
+Calendar.belongsTo(Dogs);
+Dogs.hasMany(Calendar);
+
+// Una reserva (Calendar) puede estar asociada a un paseo (Walks)
+Calendar.belongsTo(Walks);
+Walks.hasOne(Calendar);
+
+// Una reserva (Calendar) puede estar asociada a una tarifa única (PriceUnique)
+Calendar.belongsTo(PriceUnique);
+PriceUnique.hasMany(Calendar);
+
+// Una reserva (Calendar) puede estar asociada a una tarifa bono (PriceBono)
+Calendar.belongsTo(PriceBono);
+PriceBono.hasMany(Calendar);
+
+// Un ayudante (User) puede tener varios paseos (Walks) que ha realizado
+User.hasMany(Walks, { as: 'AyudantePaseos', foreignKey: 'ayudanteId' });
+Walks.belongsTo(User, { as: 'Ayudante', foreignKey: 'ayudanteId' });
+
+// Un ayudante (User) puede tener varios pagos (Bill) recibidos
+User.hasMany(Bill, { as: 'PagosAyudante', foreignKey: 'ayudanteId' });
+Bill.belongsTo(User, { as: 'Ayudante', foreignKey: 'ayudanteId' });
+
+// Un cliente (DogOwners) puede tener varias facturas (Bill) generadas
+DogOwners.hasMany(Bill);
+Bill.belongsTo(DogOwners);
+
+// Un perro (Dogs) puede tener varias facturas (Bill) generadas
+Dogs.hasMany(Bill);
+Bill.belongsTo(Dogs);
+
 
 
 
@@ -59,5 +128,11 @@ module.exports = {
     DogObservations, 
     DogOwners, 
     Admin,
+    User,
+    Calendar,
+    PriceUnique,
+    PriceBono,
+    Walks,
+    Bill,
     conn: sequelize,
   };
