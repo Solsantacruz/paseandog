@@ -75,12 +75,12 @@ Dogs.hasMany(DogObservations);
 DogObservations.belongsTo(Dogs);
 
 // Un paseador (User) puede tener varios paseos (Walks)
-User.hasMany(Walks);
-Walks.belongsTo(User);
+User.hasMany(Calendar);
+Calendar.belongsTo(User);
 
 // Un paseador (Admin) puede tener varios paseos (Walks)
-Admin.hasMany(Walks);
-Walks.belongsTo(Admin);
+Admin.hasMany(Calendar);
+Calendar.belongsTo(Admin);
 
 // Un cliente (DogOwners) puede tener varias reservas (Calendar)
 DogOwners.hasMany(Calendar);

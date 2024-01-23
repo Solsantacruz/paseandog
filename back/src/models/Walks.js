@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
       },
       observation: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       date: {
         type: DataTypes.DATEONLY,
