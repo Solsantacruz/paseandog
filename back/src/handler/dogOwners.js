@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
     try {
       // Si hay nombre lo busca y sino, devuelve todos los clientes. 
       const result = name ? await getByName(name) : await getAllOwners();
-      console.log(req.query);
+      // console.log(req.query);
       result.length ?
         res.status(200).json(result) : res.status(404).json({error: error.message})
     } catch (error) {

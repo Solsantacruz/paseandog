@@ -28,8 +28,10 @@ router.get("/", async (req, res) => {
     const { name } = req.query;
 
     try {
-      const perro = name ? await getByNameDog(name) : await getAllDogs();
-      res.status(200).json(perro);
+      const result = name ? await getByNameDog(name) : await getAllDogs();
+      console.log(req.query);
+      result.length ?
+        res.status(200).json(result) : res.status(404).json({error: error.message})
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

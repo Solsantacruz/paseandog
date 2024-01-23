@@ -1,4 +1,5 @@
 const { Dogs, DogOwners } = require("../database");
+const {Sequelize} = require("sequelize");
 
 
 // Crea nueva ficha de perro
