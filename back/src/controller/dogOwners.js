@@ -44,8 +44,26 @@ const getByName = async (name) => {
 }
 
 
-//Modificar datos del cliente
 
+//desactivar ficha del cliente
+const desactivOwner = async (id, newData) => {
+  await DogOwners.update( newData ,{ where: { id: id } });
+  const ownerDesa = await DogOwners.findByPk(id);
+  return ownerDesa;
+}
+
+
+//editar ficha del cliente
+const updateOwner = async (id, newData) => {
+    // Actualiza los datos del cliente
+    await DogOwners.update(newData, {
+      where: { id: id },
+    });
+    
+    // Después de la actualización, obtén los datos actualizado
+    const putOwner = await DogOwners.findByPk(id);
+    return putOwner;
+  };
 
 
 
@@ -54,4 +72,6 @@ const getByName = async (name) => {
         getAllOwners,
         getOwnerById,
         getByName,
+        updateOwner,
+        desactivOwner
     }

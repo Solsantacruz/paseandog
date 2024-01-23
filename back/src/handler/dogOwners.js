@@ -4,6 +4,8 @@ const {
     getAllOwners,
     getOwnerById,
     getByName,
+    updateOwner,
+    desactivOwner
 } = require("../controller/dogOwners");
 
 const router = Router();
@@ -45,10 +47,33 @@ router.get("/", async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   })
-
-  //Busqueda por nombre 
   
+//Modifica datos del cliente.
+router.put("/update/:id", async (req, res) => {
+  const {...newData} = req.body;
+  console.log(req.body)
+  const {id} = req.params;
 
+  try {
+      const result = await updateOwner(id, {...newData});
+      res.status(200).json(result);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+});
+
+//Ruta para desactivar ficha de cliente
+router.put('/desactive/:id', async (req, res) => {
+  const { id } = req.params;
+  const {status, ...newData} = req.body;
+  try {
+   const result = await desactivOwner(id,{ ...newData, status});
+    res.status(200).json(result);
+  } catch (error) {
+    console.log('error');
+    res.status(400).send({ error: 'Desactive Fail' });
+  }
+});
 
 
 module.exports = router;

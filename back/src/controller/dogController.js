@@ -30,6 +30,18 @@ const getDogById = async (id) => {
 
 }
 
+//busqueda por nombre
+const getByNameDog = async (name) => {
+    // console.log("a ver que hay", name)
+    const dogName = await Dogs.findAll({where: {name:{
+      //Este metodo hace la busqueda por nombre sin importar las mayusculas y minusculas.
+      [Sequelize.Op.iLike]: name 
+    }}
+    });
+    return dogName;
+  
+  }
+
 //funcion para desactivar ficha de perro
 const desactivDog = async (id, newData) => {
     await Dogs.update( newData ,{ where: { id: id } });
@@ -40,7 +52,7 @@ const desactivDog = async (id, newData) => {
   
   //funcion para editar ficha de perro
   const updateDog = async (id, newData) => {
-      // Utiliza el método update de Sequelize para modificar los datos en la base de datos
+      // Actiualiza los datos del perro
       await Dogs.update(newData, {
         where: { id: id },
       });
@@ -56,6 +68,7 @@ module.exports = {
     createDog,
     getAllDogs,
     getDogById,
+    getByNameDog,
     updateDog,
     desactivDog
 }

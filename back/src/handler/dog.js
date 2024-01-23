@@ -4,7 +4,8 @@ const {
  getAllDogs,
  getDogById,
  desactivDog,
- updateDog
+ updateDog,
+ getByNameDog
 } = require("../controller/dogController");
 
 const router = Router();
@@ -24,8 +25,10 @@ router.post('/', async(req, res) => {
 
 // Obtener perro
 router.get("/", async (req, res) => {
+    const { name } = req.query;
+
     try {
-      const perro = await getAllDogs();
+      const perro = name ? await getByNameDog(name) : await getAllDogs();
       res.status(200).json(perro);
     } catch (error) {
       res.status(500).json({ message: error.message });
