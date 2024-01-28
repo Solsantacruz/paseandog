@@ -38,10 +38,27 @@ const getCredit = async () => {
     return res;
 }
 
+const upDate = async (id, newData) => {
+    // Actiualiza los datos del perro
+    await CreditClient.update(newData, {
+        where: { id: id },
+      });
+      
+      // Después de la actualización, obtén los datos actualizado
+      const putCredit = await CreditClient.findByPk(id);
+      return putCredit;
+}
 
+const desactivePlan = async (id, newData) => {
+    await CreditClient.update( newData ,{ where: { id: id } });
+    const planDesa = await CreditClient.findByPk(id);
+    return planDesa;
+  }
 
 
 module.exports = {
     addCredit,
-    getCredit
+    getCredit,
+    upDate,
+    desactivePlan
 }
