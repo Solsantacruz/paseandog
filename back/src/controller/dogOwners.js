@@ -21,7 +21,9 @@ const createOwner = async (name, phone, email, address, postalCode, district, em
 
     // Controller llamado a todos los Clientes
 const getAllOwners = async () => {
-    const owners = await DogOwners.findAll();
+    const owners = await DogOwners.findAll({
+      include: Dog,
+    });
     return owners;
   };
 

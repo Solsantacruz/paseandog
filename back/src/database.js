@@ -17,6 +17,7 @@ const PriceUniqueModels = require("./models/PriceUnique");
 const PriceBonoModels = require("./models/PriceBono");
 const WalksModels = require("./models/Walks");
 const BillModels = require("./models/Bill");
+const CreditClientModels = require("./models/CreditClient");
 
 // Para conexion local
 const sequelize = new Sequelize(
@@ -47,8 +48,9 @@ PriceUniqueModels(sequelize);
 PriceBonoModels(sequelize);
 WalksModels(sequelize);
 BillModels(sequelize);
+CreditClientModels(sequelize);
 
-const { Dogs, DogObservations, DogOwners, Admin, User, Calendar, PriceUnique, PriceBono, Walks, Bill} = sequelize.models;
+const { Dogs, DogObservations, DogOwners, Admin, User, Calendar, PriceUnique, PriceBono, Walks, Bill, CreditClient} = sequelize.models;
 
 
 // Se define las relaciones
@@ -102,21 +104,18 @@ PriceUnique.hasMany(Calendar);
 Calendar.belongsTo(PriceBono);
 PriceBono.hasMany(Calendar);
 
-// Un ayudante (User) puede tener varios paseos (Walks) que ha realizado
-User.hasMany(Walks, { as: 'AyudantePaseos', foreignKey: 'ayudanteId' });
-Walks.belongsTo(User, { as: 'Ayudante', foreignKey: 'ayudanteId' });
+// Relacion entre cliente y pago con bonos
+DogOwners.belongsToMany(PriceBono, { through: CreditClient });
+PriceBono.belongsToMany(DogOwners, { through: CreditClient });
+CreditClient.belongsTo(DogOwners);
+CreditClient.belongsTo(PriceBono);
 
-// Un ayudante (User) puede tener varios pagos (Bill) recibidos
-User.hasMany(Bill, { as: 'PagosAyudante', foreignKey: 'ayudanteId' });
-Bill.belongsTo(User, { as: 'Ayudante', foreignKey: 'ayudanteId' });
+// Relacion entre cliente y pago unico
+DogOwners.hasMany(PriceUnique);
+PriceUnique.belongsTo(DogOwners);
+// PriceUnique.belongsToMany(DogOwners, { through: "cliente_pago"});
 
-// Un cliente (DogOwners) puede tener varias facturas (Bill) generadas
-DogOwners.hasMany(Bill);
-Bill.belongsTo(DogOwners);
 
-// Un perro (Dogs) puede tener varias facturas (Bill) generadas
-Dogs.hasMany(Bill);
-Bill.belongsTo(Dogs);
 
 
 
@@ -134,5 +133,6 @@ module.exports = {
     PriceBono,
     Walks,
     Bill,
+    CreditClient,
     conn: sequelize,
   };

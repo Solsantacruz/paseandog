@@ -2,24 +2,24 @@ const { DataTypes } = require("sequelize");
 //Costo y nombres de las tarifas bonos
 module.exports = (sequelize) => {
   sequelize.define(
-    "PriceBono",
+    "CreditClient",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      cantidadServicios: {
+      usosRestantes: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      precio: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
+      status: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true, 
+      },
+      createDate: {
+        type: DataTypes.DATE,
+        allowNull: false, // Llevara la fecha de registro para luego desactivarla pasado los 30 dias(por ejemplo)
       },
     },
 
