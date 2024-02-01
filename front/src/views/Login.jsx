@@ -11,7 +11,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/user/login?email=${email}&password=${password}`);
+      const response = await fetch(`http://localhost:3001/admin/login?email=${email}&password=${password}`);
       const data = await response.json();
 
       if (response.ok) {
