@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
         autoIncrement: true,
       },
       fecha: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       hora: {
@@ -19,10 +19,6 @@ module.exports = (sequelize) => {
       },
       detalle: {
         type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      performerRole: {
-        type: DataTypes.ENUM('User', 'Admin'), // Puedes usar un ENUM para limitar los valores
         allowNull: false,
       },
       status: {

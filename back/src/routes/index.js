@@ -1,5 +1,6 @@
 const {Router} = require('express');
-const handlerUser = require('../handler/admin');
+const handlerAdmin = require('../handler/admin');
+const handlerUser = require('../handler/user.js')
 const handlerDogOwners = require("../handler/dogOwners");
 const handlerDog = require('../handler/dog');
 const handlerPriceUnique = require('../handler/priceUnique.js');
@@ -10,6 +11,7 @@ const handlerCreditClient = require('../handler/creditClientHandler.js')
 
 const router = Router();
 
+router.use('/admin', handlerAdmin);
 router.use('/user', handlerUser);
 router.use('/dogOwners', handlerDogOwners);
 router.use('/dog', handlerDog);
