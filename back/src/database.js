@@ -76,13 +76,9 @@ Dogs.belongsTo(DogOwners);
 Dogs.hasMany(DogObservations);
 DogObservations.belongsTo(Dogs);
 
-// Un paseador (User) puede tener varios paseos (Walks)
+// Un paseador (User) puede tener varias reserva (Calendar)
 User.hasMany(Calendar);
 Calendar.belongsTo(User);
-
-// Un paseador (Admin) puede tener varios paseos (Walks)
-Admin.hasMany(Calendar);
-Calendar.belongsTo(Admin);
 
 // Un cliente (DogOwners) puede tener varias reservas (Calendar)
 DogOwners.hasMany(Calendar);
@@ -93,7 +89,7 @@ Calendar.belongsTo(Dogs);
 Dogs.hasMany(Calendar);
 
 // Una reserva (Calendar) puede estar asociada a un paseo (Walks)
-Calendar.belongsTo(Walks);
+Calendar.hasMany(Walks);
 Walks.hasOne(Calendar);
 
 // Una reserva (Calendar) puede estar asociada a una tarifa única (PriceUnique)
@@ -101,8 +97,8 @@ Calendar.belongsTo(PriceUnique);
 PriceUnique.hasMany(Calendar);
 
 // Una reserva (Calendar) puede estar asociada a una tarifa bono (PriceBono)
-Calendar.belongsTo(PriceBono);
-PriceBono.hasMany(Calendar);
+Calendar.belongsTo(CreditClient);
+CreditClient.hasMany(Calendar);
 
 // Relacion entre cliente y pago con bonos
 DogOwners.belongsToMany(PriceBono, { through: CreditClient });
