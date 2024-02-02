@@ -1,52 +1,105 @@
-const { Calendar, Dogs, DogOwners, PriceBono, PriceUnique, User, Walks } = require("../database");
+const { Calendar, CreditClient, PriceBono, PriceUnique, Dogs, DogOwners, User, } = require("../database");
+
+
 
 
 const createCalendar = async (object) => {
-    try {
-      const {
-        fecha,
-        hora,
-        detalle,
-        DogOwnerId,
-        DogId,
-        WalkId,
-        PriceUniqueId,
-        PriceBonoId,
-        UserId,
-        AdminId,
-      } = object;
-  
-      // Verifica que al menos un campo relacionado esté presente
-      if (!(DogOwnerId || UserId || AdminId)) {
-        throw new Error("Se debe proporcionar al menos un usuario, un administrador o un perro para la reserva.");
+  try {
+      const { fecha, hora, detalle, DogOwnerId, DogId, UserId, tipoPago, importe, bonoId } = object;
+
+      let calendarData = {
+          fecha,
+          hora,
+          detalle,
+          DogOwnerId,
+          DogId,
+          UserId,
+          tipoPago
+      };
+
+      if (tipoPago === 'unico') {
+          // Pago único
+          const priceUnique = await PriceUnique.create({ importe, DogOwnerId });
+          calendarData.PriceUniqueId = priceUnique.id;
+      } else if (tipoPago === 'bono') {
+          // Pago con bono
+          const creditClient = await CreditClient.findByPk(bonoId);
+          if (!creditClient) {
+              throw new Error('No se encontró el bono especificado.');
+          }
+          // Decrementa el contador de usos restantes en el bono
+  if (creditClient.usosRestantes > 0) {
+    await creditClient.update({ usosRestantes: creditClient.usosRestantes - 1 });
+  } else {
+    throw new Error("El bono no tiene usos restantes.");
+  }
+          calendarData.CreditClientId = creditClient.id;
+      } else {
+          throw new Error('Tipo de pago no válido.');
       }
-  
-      // Determina el performerRole en función de quién realiza la reserva
-      const performerRole = UserId ? 'User' : AdminId ? 'Admin' : null;
-  
-      // Crea la reserva en el calendario con el performerRole determinado
-      const newCalendar = await Calendar.create({
-        fecha,
-        hora,
-        detalle,
-        DogOwnerId,
-        DogId,
-        WalkId,
-        PriceUniqueId,
-        PriceBonoId,
-        UserId: performerRole === 'User' ? UserId : null,
-        AdminId: performerRole === 'Admin' ? AdminId : null,
-        performerRole,
-      });
-  
-      console.log("Reserva de calendario creada:", newCalendar);
-  
-      return newCalendar;
-    } catch (error) {
-      console.error("Error al crear la reserva de calendario:", error);
+
+      const calendar = await Calendar.create(calendarData);
+      return calendar;
+  } catch (error) {
       throw error;
-    }
-  };
+  }
+};
+
+const getAllCalendar = async () => {
+
+  const allCalendar = await Calendar.findAll(
+    {
+      include: [{
+          model: DogOwners,
+          attributes: ['name'] // Incluye solo el campo 'name' de DogOwners
+      },
+      {
+          model: Dogs,
+          attributes: ['name'] // Incluye solo el campo 'name' de PriceBono
+      },
+      {
+          model: CreditClient,
+          attributes: ['usosRestantes'] // Incluye solo el campo 'name' de PriceBono
+      },
+      {
+          model: PriceUnique,
+          attributes: ['importe'] // Incluye solo el campo 'name' de PriceBono
+      },
+      {
+          model: User,
+          attributes: ['name'] // Incluye solo el campo 'name' de PriceBono
+      }
+    
+    ]
+  }
+  );
+
+
+  return allCalendar;
+}
+
+
+
+
+const upDate = async (id, newData) => {
+  // Actiualiza los datos de la reserva
+  await Calendar.update(newData, {
+      where: { id: id },
+    });
+    
+    // Después de la actualización, obtén los datos actualizado
+    const putCredit = await CreditClient.findByPk(id);
+    return putCredit;
+}
+
+const desactiveReser = async (id, newData) => {
+  await Calendar.update( newData ,{ where: { id: id } });
+  const planDesa = await Calendar.findByPk(id);
+  return planDesa;
+}
+
+
+
 
 
 
@@ -55,4 +108,7 @@ const createCalendar = async (object) => {
 
 module.exports = {
 createCalendar,
+getAllCalendar,
+upDate,
+desactiveReser
 }

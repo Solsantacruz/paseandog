@@ -93,12 +93,18 @@ Calendar.hasMany(Walks);
 Walks.hasOne(Calendar);
 
 // Una reserva (Calendar) puede estar asociada a una tarifa única (PriceUnique)
-Calendar.belongsTo(PriceUnique);
-PriceUnique.hasMany(Calendar);
+// Calendar.belongsTo(PriceUnique);
+// PriceUnique.hasMany(Calendar);
 
 // Una reserva (Calendar) puede estar asociada a una tarifa bono (PriceBono)
+// Calendar.belongsTo(CreditClient);
+// CreditClient.hasMany(Calendar);
+
+
+// En el modelo Calendar
+Calendar.belongsTo(PriceUnique);
 Calendar.belongsTo(CreditClient);
-CreditClient.hasMany(Calendar);
+
 
 // Relacion entre cliente y pago con bonos
 DogOwners.belongsToMany(PriceBono, { through: CreditClient });

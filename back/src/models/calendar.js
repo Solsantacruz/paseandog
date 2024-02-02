@@ -14,12 +14,16 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       hora: {
-        type: DataTypes.DATE,
+        type: DataTypes.TIME,
         allowNull: false,
       },
       detalle: {
         type: DataTypes.TEXT,
         allowNull: false,
+      },
+      tipoPago: {
+        type: DataTypes.ENUM('unico', 'bono'),
+        allowNull: false
       },
       status: {
           type: DataTypes.BOOLEAN,

@@ -9,11 +9,7 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      price: {
+      importe: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
