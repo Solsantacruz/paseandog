@@ -2,6 +2,7 @@ const { Router } = require("express");
 const {
   createCalendar,
   getAllCalendar,
+  getReserById,
   desactiveReser,
   upDate
 } = require("../controller/calendarController.js");
@@ -31,6 +32,18 @@ router.get("/", async (req, res) => {
     }
   });
 
+   //Busqueda por ID
+ router.get("/:id", async (req, res) => {
+  const { id} = req.params;
+
+  try {
+    const result = await getReserById(id);
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+})
 
   router.put('/update/:id', async(req, res) => {
     const {...newData} = req.body;

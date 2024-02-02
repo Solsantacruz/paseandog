@@ -78,6 +78,35 @@ const getAllCalendar = async () => {
   return allCalendar;
 }
 
+const getReserById = async (id) => {
+
+  const reserId = await Calendar.findOne({where: {id:id},
+    
+      include: [{
+          model: DogOwners,
+          attributes: ['name'] // Incluye solo el campo 'name' de DogOwners
+      },
+      {
+          model: Dogs,
+          attributes: ['name'] // Incluye solo el campo 'name' de PriceBono
+      },
+      {
+          model: CreditClient,
+          attributes: ['usosRestantes'] // Incluye solo el campo 'name' de PriceBono
+      },
+      {
+          model: PriceUnique,
+          attributes: ['importe'] // Incluye solo el campo 'name' de PriceBono
+      },
+      {
+          model: User,
+          attributes: ['name'] // Incluye solo el campo 'name' de PriceBono
+      }
+    
+    ]
+  });
+  return reserId;
+}
 
 
 
@@ -109,6 +138,7 @@ const desactiveReser = async (id, newData) => {
 module.exports = {
 createCalendar,
 getAllCalendar,
+getReserById,
 upDate,
 desactiveReser
 }
