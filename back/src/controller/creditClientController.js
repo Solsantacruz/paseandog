@@ -7,9 +7,9 @@ const addCredit = async (DogOwnerId, PriceBonoId) => {
     const bono = await PriceBono.findByPk(PriceBonoId);
         console.log('bono', bono)
     // Verificar si el bono existe
-    // if (!bono) {
-    //     throw new Error('El bono especificado no existe.');
-    // }
+    if (!bono) {
+        throw new Error('El bono especificado no existe.');
+    }
     
     // Crear la entrada en la tabla intermedia
     const asignacionBono = await CreditClient.create({

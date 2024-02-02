@@ -13,8 +13,17 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      status: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: true
+       },
+       date: {
+         type: DataTypes.DATEONLY,
+         allowNull: false,
+       }
+
     },
 
-    { timestamps: true }
+    { timestamps: false }
   );
 };

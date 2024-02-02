@@ -1,20 +1,25 @@
 const { DataTypes } = require("sequelize");
-//Costo y nombres de las tarifas
+//Procesos de cada perro
 module.exports = (sequelize) => {
   sequelize.define(
-    "PriceUnique",
+    "Service",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      importe: {
-        type: DataTypes.FLOAT,
+      name: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
+      status: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: true
+       },
+
     },
 
-    { timestamps: true }
+    { timestamps: false }
   );
 };

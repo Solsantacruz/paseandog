@@ -16,7 +16,11 @@ module.exports = (sequelize) => {
       date: {
         type: DataTypes.DATEONLY,
         allowNull: false,
-      }
+      },
+      status: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+     }
     },
 
     { timestamps: true }

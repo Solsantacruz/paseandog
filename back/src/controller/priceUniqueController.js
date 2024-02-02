@@ -2,8 +2,11 @@ const {PriceUnique, DogOwners } = require('../database');
 
 
 
-const createUnique = async (name, price, DogOwnerId) => {
-    const newBono = PriceUnique.create({name, price, DogOwnerId});
+const createUnique = async (importe, DogOwnerId) => {
+
+  const pago = parseFloat(importe)
+
+    const newBono = PriceUnique.create( {importe:pago}, DogOwnerId);
     return newBono;
 }
 

@@ -18,6 +18,7 @@ const PriceBonoModels = require("./models/PriceBono");
 const WalksModels = require("./models/Walks");
 const BillModels = require("./models/Bill");
 const CreditClientModels = require("./models/CreditClient");
+const ServiceModels = require("./models/Service");
 
 // Para conexion local
 const sequelize = new Sequelize(
@@ -49,17 +50,22 @@ PriceBonoModels(sequelize);
 WalksModels(sequelize);
 BillModels(sequelize);
 CreditClientModels(sequelize);
+ServiceModels(sequelize);
 
-const { Dogs, DogObservations, DogOwners, Admin, User, Calendar, PriceUnique, PriceBono, Walks, Bill, CreditClient} = sequelize.models;
+const { 
+  Dogs, 
+  DogObservations, 
+  DogOwners, 
+  Admin, 
+  User, 
+  Calendar, 
+  PriceUnique, 
+  PriceBono, 
+  Walks, 
+  Bill, 
+  CreditClient, 
+  Service} = sequelize.models;
 
-
-// Se define las relaciones
-
-// Admin.hasMany(DogOwners);
-// DogOwners.hasMany(Dogs);
-// Dogs.hasOne(DogOwners);
-// Dogs.hasMany(DogObservations);
-// DogObservations.hasOne(Dogs);
 
 
 // Relaciones entre modelos
@@ -90,20 +96,18 @@ Dogs.hasMany(Calendar);
 
 // Una reserva (Calendar) puede estar asociada a un paseo (Walks)
 Calendar.hasMany(Walks);
-Walks.hasOne(Calendar);
-
-// Una reserva (Calendar) puede estar asociada a una tarifa única (PriceUnique)
-// Calendar.belongsTo(PriceUnique);
-// PriceUnique.hasMany(Calendar);
-
-// Una reserva (Calendar) puede estar asociada a una tarifa bono (PriceBono)
-// Calendar.belongsTo(CreditClient);
-// CreditClient.hasMany(Calendar);
-
+Walks.belongsTo(Calendar);
 
 // En el modelo Calendar
 Calendar.belongsTo(PriceUnique);
 Calendar.belongsTo(CreditClient);
+
+// Servicios de reserva
+Service.hasMany(Calendar);
+Calendar.belongsTo(Service);
+
+Service.hasMany(Dogs);
+Dogs.belongsTo(Service);
 
 
 // Relacion entre cliente y pago con bonos
@@ -116,6 +120,10 @@ CreditClient.belongsTo(PriceBono);
 DogOwners.hasMany(PriceUnique);
 PriceUnique.belongsTo(DogOwners);
 // PriceUnique.belongsToMany(DogOwners, { through: "cliente_pago"});
+
+
+
+
 
 
 
@@ -136,5 +144,6 @@ module.exports = {
     Walks,
     Bill,
     CreditClient,
+    Service,
     conn: sequelize,
   };

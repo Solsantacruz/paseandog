@@ -1,4 +1,4 @@
-const { Dogs, DogOwners } = require("../database");
+const { Dogs, DogOwners, DogObservations, Calendar , Service} = require("../database");
 const {Sequelize} = require("sequelize");
 
 
@@ -15,7 +15,22 @@ const createDog = async (name, years, race, size, gender, weight, energyLevel, a
 // de su dueño (cliente)
 const getAllDogs = async () => {
     const dog = await Dogs.findAll({
-        include: DogOwners,
+      include: [{
+        model: DogOwners,
+    },
+    {
+        model: DogObservations,
+        attributes: ['description', 'date']
+    },
+    {
+        model: Calendar,
+    },
+    {
+        model: Service,
+        attributes: ['name'] // Incluye solo el campo 'name' de PriceBono
+    },
+  
+  ]
     });
     return dog;
 }

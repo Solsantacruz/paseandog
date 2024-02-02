@@ -1,11 +1,13 @@
-const { Calendar, CreditClient, PriceBono, PriceUnique, Dogs, DogOwners, User, } = require("../database");
+const { Calendar, CreditClient, Walks, PriceUnique, Dogs, DogOwners, User, Service } = require("../database");
 
 
 
 
 const createCalendar = async (object) => {
   try {
-      const { fecha, hora, detalle, DogOwnerId, DogId, UserId, tipoPago, importe, bonoId } = object;
+      const { fecha, hora, detalle, DogOwnerId, DogId, UserId, tipoPago, importe, bonoId, ServiceId } = object;
+
+      const pago = parseFloat(importe)
 
       let calendarData = {
           fecha,
@@ -14,12 +16,14 @@ const createCalendar = async (object) => {
           DogOwnerId,
           DogId,
           UserId,
-          tipoPago
+          tipoPago,
+          ServiceId
+          
       };
 
       if (tipoPago === 'unico') {
           // Pago único
-          const priceUnique = await PriceUnique.create({ importe, DogOwnerId });
+          const priceUnique = await PriceUnique.create({ importe: pago, DogOwnerId });
           calendarData.PriceUniqueId = priceUnique.id;
       } else if (tipoPago === 'bono') {
           // Pago con bono
@@ -68,7 +72,15 @@ const getAllCalendar = async () => {
       {
           model: User,
           attributes: ['name'] // Incluye solo el campo 'name' de PriceBono
-      }
+      },
+      {
+        model: Walks,
+        attributes: ['id','observation', 'date' ]
+    },
+    {
+        model: Service,
+        attributes: ['name'] 
+    },
     
     ]
   }
@@ -88,20 +100,28 @@ const getReserById = async (id) => {
       },
       {
           model: Dogs,
-          attributes: ['name'] // Incluye solo el campo 'name' de PriceBono
+          attributes: ['name'] 
       },
       {
           model: CreditClient,
-          attributes: ['usosRestantes'] // Incluye solo el campo 'name' de PriceBono
+          attributes: ['usosRestantes'] 
       },
       {
           model: PriceUnique,
-          attributes: ['importe'] // Incluye solo el campo 'name' de PriceBono
+          attributes: ['importe'] 
       },
       {
           model: User,
+          attributes: ['name']
+      },
+      {
+          model: Walks,
+          attributes: ['observation']
+      },
+      {
+          model: Service,
           attributes: ['name'] // Incluye solo el campo 'name' de PriceBono
-      }
+      },
     
     ]
   });

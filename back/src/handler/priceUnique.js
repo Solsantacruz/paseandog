@@ -10,10 +10,10 @@ const router = Router();
 
 router.post('/', async(req, res) => {
 
-    const {name, price, DogOwnerId} = req.body;
+    const {importe, DogOwnerId} = req.body;
 
     try {
-        const result = await createUnique(name, price, DogOwnerId);
+        const result = await createUnique(importe, DogOwnerId);
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ message: error.message }); 
