@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom"; // Importa el componente Link
 import SiderBar from "../components/SiderBar";
-import CardClient from "../components/CardClient."; // Asegúrate de importar el componente CardClient
+
 
 const Clientes = () => {
   const [clientes, setClientes] = useState([]);
@@ -17,7 +18,7 @@ const Clientes = () => {
       .catch((error) => {
         console.error("Error al obtener la lista de clientes:", error);
       });
-  }, []); // El segundo parámetro [] asegura que useEffect se ejecute solo una vez, similar a componentDidMount
+  }, []);
 
   const handleClientClick = (clientId) => {
     setSelectedClientId(clientId);
@@ -29,22 +30,21 @@ const Clientes = () => {
 
       <div className="flex-col w-full overflow-auto">
         <div className="flex flex-row justify-between items-center mb-4 bg-black text-white p-4">
-          <h1 className=" text-2xl font-semibold w-full text-center">
+          <h1 className="text-2xl font-semibold w-full text-center">
             Clientes
           </h1>
-          <button className=" bg-green-900 hover:bg-green-700 rounded focus:outline-none">
+          <Link to="/nuevo-cliente" className="bg-green-900 hover:bg-green-700 rounded focus:outline-none">
             Nuevo Cliente
-          </button>
+          </Link>
         </div>
 
         <div className="flex flex-wrap">
           {clientes.map((cliente) => (
-            <div
-              key={cliente.id}
-              className="w-full lg:w-1/5 p-4 cursor-pointer"
-              onClick={() => handleClientClick(cliente.id)}
-            >
-              <div className="h-48 bg-white rounded-lg shadow-md mb-4">
+            <Link key={cliente.id} to={`/clientes/${cliente.id}`} className="w-full lg:w-1/5 p-4 cursor-pointer">
+              <div
+                className="h-48 bg-white rounded-lg shadow-md mb-4"
+                onClick={() => handleClientClick(cliente.id)}
+              >
                 <img
                   src={cliente.avatar}
                   alt={cliente.name}
@@ -52,12 +52,10 @@ const Clientes = () => {
                 />
                 <p className="text-center font-semibold p-2">{cliente.name}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
-
-        {/* Mostrar la tarjeta del cliente seleccionado */}
-        {selectedClientId && <CardClient clientId={selectedClientId} />}
+        
       </div>
     </div>
   );
