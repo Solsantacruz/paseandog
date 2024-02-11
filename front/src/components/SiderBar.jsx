@@ -29,7 +29,7 @@ const SiderBar = () => {
               </button>
             </li>
             <li>
-              <button className="w-full bg-green-900 hover:bg-green-700 py-2 px-4 rounded focus:outline-none">
+              <button onClick={()=> navigate("/dogs")} className="w-full bg-green-900 hover:bg-green-700 py-2 px-4 rounded focus:outline-none">
                 Mascotas
               </button>
             </li>
