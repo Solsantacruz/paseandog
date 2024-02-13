@@ -2,11 +2,13 @@ import  { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom"; // Importa el componente Link
 import SiderBar from "../components/SiderBar";
+import NewClientForm from "../components/NewClient";
 
 
 const Clientes = () => {
   const [clientes, setClientes] = useState([]);
   const [selectedClientId, setSelectedClientId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     // Hacer la solicitud GET al servidor para obtener la lista de clientes
@@ -24,6 +26,19 @@ const Clientes = () => {
     setSelectedClientId(clientId);
   };
 
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleClientAdded = (newClient) => {
+    setClientes([...clientes, newClient]);
+    setShowModal(false);
+  };
+
   return (
     <div className="flex h-screen">
       <SiderBar />
@@ -33,8 +48,11 @@ const Clientes = () => {
           <h1 className="text-2xl font-semibold w-full text-center">
             Clientes
           </h1>
-          <Link to="/nuevo-cliente" className="bg-green-900 hover:bg-green-700 rounded focus:outline-none">
-            Nuevo Cliente
+          <Link to="/clientes">
+            <button className=" bg-green-900 hover:bg-green-700 rounded focus:outline-none font-sans"
+            onClick={handleShowModal}>
+              Nuevo Cliente
+            </button>
           </Link>
         </div>
 
@@ -55,6 +73,15 @@ const Clientes = () => {
             </Link>
           ))}
         </div>
+        {showModal && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 ">
+            <div className="bg-white p-8 rounded-[10px] flex items-center justify-center">
+            {/* vista modal */}
+              <NewClientForm onClientAdded={handleClientAdded} handleCloseModal={handleCloseModal}/>
+              
+            </div>
+          </div>
+        )}
         
       </div>
     </div>

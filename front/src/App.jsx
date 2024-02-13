@@ -7,6 +7,10 @@ import Clientes from "./views/Clientes";
 import CardClient from "./components/CardClient.";
 import DetailDog from "./views/DeatailDog";
 import Dogs from "./views/Dogs";
+import NewClient from "./components/NewClient";
+
+
+
 
 function App() {
   return (
@@ -15,6 +19,7 @@ function App() {
       <Route path="/home" element={<Home />} />
       <Route path="/clientes" element={<Clientes />} />
       <Route path="/clientes/:id" element={<CardClient />} />
+      <Route path="/clientes" element={<NewClient />} /> 
       <Route path="/dog/:id" element={<DetailDog />} />
       <Route path="/dogs" element={<Dogs />} />
     </Routes>
