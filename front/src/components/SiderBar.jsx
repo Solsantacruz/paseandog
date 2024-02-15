@@ -1,8 +1,22 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
+import { useState } from "react";
+import Reservas from "../views/Reservas";
 
 
 const SiderBar = () => {
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+
     
   const navigate = useNavigate();
 
@@ -19,9 +33,11 @@ const SiderBar = () => {
               </button>
             </li>
             <li>
-              <button className="w-full bg-green-900 hover:bg-green-700 py-2 px-4 rounded focus:outline-none">
+              
+              <button onClick={handleShowModal}  className="w-full bg-green-900 hover:bg-green-700 py-2 px-4 rounded focus:outline-none">
                 Reservar Paseo
               </button>
+              
             </li>
             <li>
               <button onClick={()=> navigate("/clientes")}  className="w-full bg-green-900 hover:bg-green-700 py-2 px-4 rounded focus:outline-none">
@@ -31,6 +47,11 @@ const SiderBar = () => {
             <li>
               <button onClick={()=> navigate("/dogs")} className="w-full bg-green-900 hover:bg-green-700 py-2 px-4 rounded focus:outline-none">
                 Mascotas
+              </button>
+            </li>
+            <li>
+              <button onClick={()=> navigate("/paseadores")} className="w-full bg-green-900 hover:bg-green-700 py-2 px-4 rounded focus:outline-none">
+                Paseadores
               </button>
             </li>
             <li>
@@ -55,6 +76,15 @@ const SiderBar = () => {
             </li>
           </ul>
         </nav>
+        {showModal && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 ">
+            <div className="bg-white p-8 rounded-[10px] flex items-center justify-center">
+            {/* vista modal */}
+              <Reservas handleCloseModal={handleCloseModal} />
+              
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

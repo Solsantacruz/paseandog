@@ -1,7 +1,11 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import  { useState, useEffect } from "react";
+
 
 const Calendary = () => {
+
+
   return (
     <div className="flex-1  p-4 h-full overflow-y-auto">
       <div className="h-56">
@@ -21,6 +25,7 @@ const Calendary = () => {
           themeSystem="standard"
         />
       </div>
+      
     </div>
   );
 };

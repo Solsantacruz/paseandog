@@ -77,7 +77,7 @@ const Clientes = () => {
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 ">
             <div className="bg-white p-8 rounded-[10px] flex items-center justify-center">
             {/* vista modal */}
-              <NewClientForm onClientAdded={handleClientAdded} handleCloseModal={handleCloseModal}/>
+              <NewClientForm onClientAdded={handleClientAdded} handleCloseModal={handleCloseModal} />
               
             </div>
           </div>
